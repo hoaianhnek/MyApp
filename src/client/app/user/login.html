@@ -1,0 +1,213 @@
+<section id="login-view">
+  <div class="container" id="container">
+    <div class="forms-container">
+      <div id="container-verified"></div>
+      <div class="signin-signup">
+        <!-- đăng nhập -->
+        <form name="userLogin" class="sign-in-form" ng-show="!vm.isShowResetPassword && !vm.isShowResetPhone && !vm.isShowVerifiedSignIn">
+          <h2 class="title">Đăng nhập</h2>
+          <div class="input-field" ng-class="{'has-error': userLogin.userName.$invalid && !userLogin.userName.$pristine}">
+            <i class="fa fa-user"></i>
+            <input type="text" placeholder="Tên người dùng" ng-model="vm.userName" ng-maxlength="50" ng-minlength="8" name="userName" ng-required="true" />
+          </div>
+          <p class="text-error" ng-show="userLogin.userName.$invalid && !userLogin.userName.$pristine">Tên người dùng ít nhất 8 ký tự</p>
+          <div class="input-field" ng-class="{'has-error': userLogin.password.$invalid && !userLogin.password.$pristine}">
+            <i class="fa fa-lock"></i>
+            <input type="{{vm.inputType}}" placeholder="Mật khẩu" ng-model="vm.password" ng-maxlength="20" ng-minlength="8" 
+              name="password" ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,50})/i" ng-required="true"/>
+            <a style="position: absolute; right: 45px;" ng-click="vm.showPassword()" ng-show = "vm.inputType == 'password'"><i class="fa fa-eye"></i></a>
+            <a style="position: absolute; right: 45px;" ng-click="vm.showPassword()" ng-show = "vm.inputType != 'password'"><i class="fa fa-eye-slash"></i></a>
+          </div>
+          <p class="text-error" ng-show="userLogin.password.$invalid && !userLogin.password.$pristine">Mật khẩu ít nhất 8 ký tự bao gồm số và ký tự</p>
+          <input type="submit" value="Đăng nhập" class="btn solid" ng-click="vm.Login()" ng-disabled="userLogin.$invalid"/>
+          <a style="color: #E73D5F !important;text-transform: uppercase;justify-content: center;cursor: pointer;font-size:12px" ng-click="vm.isShowResetPhone = true">Quên mật khẩu</a>
+        </form>
+        <!-- đăng ký -->
+        <form name="userRegister" class="sign-up-form" ng-show="!vm.isShowVerified && !vm.isShowInforRegister">
+          <h2 class="title">Tạo tài khoản</h2>
+          <div class="input-field" ng-class="{'has-error': userRegister.mobilePhone.$invalid && !userRegister.mobilePhone.$pristine}">
+            <i class="fa fa-mobile-phone"></i>
+            <input type="phone" placeholder="Nhập số điện thoại" ng-model="vm.mobilePhone" ng-maxlength="10" ng-minlength="10" ng-required="true"
+              name="mobilePhone" ng-pattern="/^(\+\d{1,3} ?)?(\(\d{1,5}\)|\d{1,5}) ?\d{3} ?\d{0,7}( ?(x|xtn|ext|extn|extension)?\.? ?\d{1,5})?$/i" />
+          </div>
+          <p class="text-error" ng-show="userRegister.mobilePhone.$invalid && !userRegister.mobilePhone.$pristine">Số điện thoại không hợp lệ</p>
+          <div id='recaptcha-container'></div>
+          <input type="submit" class="btn" value="Tiếp tục" ng-disabled="userRegister.$invalid" ng-click="vm.checkUserCheckExisted()"/>
+          <p class="social-text">Hoặc đăng ký với</p>
+          <div class="social-media">
+            <a href="#" class="social-icon">
+              <i class="fa fa-facebook-f"></i>
+            </a>
+            <a href="#" class="social-icon">
+              <i class="fa fa-twitter"></i>
+            </a>
+            <a href="#" class="social-icon">
+              <i class="fa fa-google"></i>
+            </a>
+            <a href="#" class="social-icon">
+              <i class="fa fa-linkedin"></i>
+            </a>
+          </div>
+        </form>
+        <!-- xác thực -->
+        <form name="userVerified" class="sign-up-form" ng-show="vm.isShowVerified">
+          <h2 class="title">Tạo tài khoản</h2>
+          <span style="margin-top: 5px; color:black;" class="mb-5">Vui lòng nhập OTP để xác minh tài khỏan của bạn. Mã đã được gửi đến số điện thoại {{vm.mobilePhone}}</span>
+          <div class="form-row mb-4" id="otp">
+            <input type="text" class="col mx-2 form-control text-center text-6 py-2 number" name="number-one" maxlength="1" autocomplete="off">
+            <input type="text" class="col mx-2 form-control text-center text-6 py-2 number" name="number-two" maxlength="1" autocomplete="off">
+            <input type="text" class="col mx-2 form-control text-center text-6 py-2 number" name="number-three" maxlength="1" autocomplete="off">
+            <input type="text" class="col mx-2 form-control text-center text-6 py-2 number" name="number-four" maxlength="1" autocomplete="off">
+            <input type="text" class="col mx-2 form-control text-center text-6 py-2 number" name="number-five" maxlength="1" autocomplete="off">
+            <input type="text" class="col mx-2 form-control text-center text-6 py-2 number" name="number-six" maxlength="1" autocomplete="off">
+          </div>
+          <div id="showError"></div>
+          <input type="Reset" class="btn" value="Gửi lại mã" ng-disabled="userRegister.$invalid" ng-click="vm.checkUserCheckExisted()"/>
+        </form>
+        <!-- thông tin đăng ký -->
+        <form name="userInfor" class="sign-up-form" ng-if="vm.isShowInforRegister">
+          <h2 class="title">Tạo tài khoản</h2>
+          <div class="input-field" ng-class="{'has-error': userInfor.userName.$invalid && !userInfor.userName.$pristine}">
+            <i class="fa fa-user"></i>
+            <input type="text" placeholder="Tên người dùng" ng-model="vm.userName" ng-maxlength="50" ng-minlength="8" name="userName" />
+          </div>
+          <p class="text-error" ng-show="userInfor.userName.$invalid && !userInfor.userName.$pristine">Tên người dùng không hợp lệ</p>
+          <div class="input-field">
+            <i class="fa fa-lock"></i>
+            <input type="{{vm.inputType}}" placeholder="Mật khẩu" ng-model="vm.password" ng-maxlength="20" ng-minlength="8" 
+              name="password" ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,50})/i" ng-required="true"/>
+            <a style="position: absolute; right: 45px;" ng-click="vm.showPassword()" ng-show = "vm.inputType == 'password'"><i class="fa fa-eye"></i></a>
+            <a style="position: absolute; right: 45px;" ng-click="vm.showPassword()" ng-show = "vm.inputType != 'password'"><i class="fa fa-eye-slash"></i></a>
+          </div>
+          <p class="text-error" ng-show="userInfor.password.$invalid && !userInfor.password.$pristine">Mật khẩu ít nhất 8 ký tự bao gồm số và ký tự</p>
+          <div class="input-field">
+            <i class="fa fa-lock"></i>
+            <input type="{{vm.inputTypeCF}}" placeholder="Nhập lại mật khẩu" ng-model="vm.confirmPassword" confirm-password="vm.password" ng-maxlength="20" ng-minlength="8" 
+              name="confirmPassword" ng-required="true"/>
+            <a style="position: absolute; right: 45px;" ng-click="vm.showPasswordCF()" ng-show = "vm.inputTypeCF == 'password'"><i class="fa fa-eye"></i></a>
+            <a style="position: absolute; right: 45px;" ng-click="vm.showPasswordCF()" ng-show = "vm.inputTypeCF != 'password'"><i class="fa fa-eye-slash"></i></a>
+          </div>
+          <p class="text-error" ng-show="userInfor.confirmPassword.$invalid && !userInfor.confirmPassword.$pristine">Mật khẩu không trùng khớp</p>
+          <input type="submit" class="btn" value="Đăng ký" ng-disabled="userInfor.$invalid" ng-click="vm.Register()"/>
+        </form>
+        <!-- Lấy lại mật khẩu -->
+        <form name="userResetPhone" class="sign-in-form" ng-show="vm.isShowResetPhone && !vm.isShowVerifiedSignIn && !vm.isShowResetPassword">
+          <h2 class="title">Lấy lại mật khẩu</h2>
+          <div class="input-field" ng-class="{'has-error': userResetPhone.mobilePhone.$invalid && !userResetPhone.mobilePhone.$pristine}">
+            <i class="fa fa-mobile-phone"></i>
+            <input type="phone" placeholder="Nhập số điện thoại" ng-model="vm.mobilePhone" ng-maxlength="10" ng-minlength="10" ng-required="true"
+              name="mobilePhone" ng-pattern="/^(\+\d{1,3} ?)?(\(\d{1,5}\)|\d{1,5}) ?\d{3} ?\d{0,7}( ?(x|xtn|ext|extn|extension)?\.? ?\d{1,5})?$/i" />
+          </div>
+          <p class="text-error" ng-show="userResetPhone.mobilePhone.$invalid && !userResetPhone.mobilePhone.$pristine">Số điện thoại không hợp lệ</p>
+          <div id='recaptcha-container'></div>
+          <input type="submit" class="btn" value="Tiếp tục" ng-disabled="userResetPhone.$invalid" ng-click="vm.checkUserCheckExistedUpdatePsw()"/>
+        </form>
+        <!-- xác thực -->
+        <form name="userVerifiedPW" class="sign-in-form" ng-show="vm.isShowVerifiedSignIn">
+          <h2 class="title">Xác thực OTP</h2>
+          <span style="margin-top: 5px; color:black;" class="mb-5">Vui lòng nhập OTP để xác minh tài khỏan của bạn. Mã đã được gửi đến số điện thoại {{vm.mobilePhone}}</span>
+          <div class="form-row mb-4" id="otp_PW">
+            <input type="text" class="col mx-2 form-control text-center text-6 py-2 number" name="number-one1" maxlength="1" autocomplete="off">
+            <input type="text" class="col mx-2 form-control text-center text-6 py-2 number" name="number-two1" maxlength="1" autocomplete="off">
+            <input type="text" class="col mx-2 form-control text-center text-6 py-2 number" name="number-three1" maxlength="1" autocomplete="off">
+            <input type="text" class="col mx-2 form-control text-center text-6 py-2 number" name="number-four1" maxlength="1" autocomplete="off">
+            <input type="text" class="col mx-2 form-control text-center text-6 py-2 number" name="number-five1" maxlength="1" autocomplete="off">
+            <input type="text" class="col mx-2 form-control text-center text-6 py-2 number" name="number-six1" maxlength="1" autocomplete="off">
+          </div>
+          <div id="showError1"></div>
+          <input type="Reset" class="btn" value="Gửi lại mã" ng-click="vm.checkUserCheckExistedUpdatePsw()"/>
+        </form>
+        <!-- update password -->
+        <form name="userResetPassword" class="sign-in-form" ng-if="vm.isShowResetPassword">
+          <h2 class="title">Cập nhật mật khẩu</h2>
+          <div class="input-field">
+            <i class="fa fa-lock"></i>
+            <input type="{{vm.inputType}}" placeholder="Mật khẩu" ng-model="vm.password" ng-maxlength="20" ng-minlength="8" 
+              name="password" ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,50})/i" ng-required="true"/>
+            <a style="position: absolute; right: 45px;" ng-click="vm.showPassword()" ng-show = "vm.inputType == 'password'"><i class="fa fa-eye"></i></a>
+            <a style="position: absolute; right: 45px;" ng-click="vm.showPassword()" ng-show = "vm.inputType != 'password'"><i class="fa fa-eye-slash"></i></a>
+          </div>
+          <p class="text-error" ng-show="userResetPassword.password.$invalid && !userResetPassword.password.$pristine">Mật khẩu ít nhất 8 ký tự bao gồm số và ký tự</p>
+          <div class="input-field">
+            <i class="fa fa-lock"></i>
+            <input type="{{vm.inputTypeCF}}" placeholder="Nhập lại mật khẩu" ng-model="vm.confirmPassword" confirm-password="vm.password" ng-maxlength="20" ng-minlength="8" 
+              name="confirmPassword" ng-required="true"/>
+            <a style="position: absolute; right: 45px;" ng-click="vm.showPasswordCF()" ng-show = "vm.inputTypeCF == 'password'"><i class="fa fa-eye"></i></a>
+            <a style="position: absolute; right: 45px;" ng-click="vm.showPasswordCF()" ng-show = "vm.inputTypeCF != 'password'"><i class="fa fa-eye-slash"></i></a>
+          </div>
+          <p class="text-error" ng-show="userResetPassword.confirmPassword.$invalid && !userResetPassword.confirmPassword.$pristine">Mật khẩu không trùng khớp</p>
+           <input type="submit" value="Cập nhật" class="btn solid" ng-click="vm.UpdatePassword()" ng-disabled="userResetPassword.$invalid"/>
+          
+        </form>
+      </div>
+    </div>
+
+    <div class="panels-container">
+      <div class="panel left-panel">
+        <div class="content">
+          <h3>Xin chào, bạn!</h3>
+          <p>
+            Nhập thông tin của bạn và bắt đầu hành trình của chúng tôi
+          </p>
+          <button class="btn transparent" id="sign-up-btn">
+            Đăng Ký
+          </button>
+        </div>
+        <img src="../images/log.svg" class="image" alt="" />
+      </div>
+      <div class="panel right-panel">
+        <div class="content">
+          <h3>Chào mừng trở lại!</h3>
+          <p>
+            Để giữ kết nối với chúng tôi, vui lòng đăng nhập bằng thông tin cá nhân của bạn
+          </p>
+          <button class="btn transparent" id="sign-in-btn">
+            Đăng nhập
+          </button>
+        </div>
+        <img src="../images/register.svg" class="image" alt="" />
+      </div>
+    </div>
+
+  </div>
+</section>
+<!-- animation form  -->
+<script>
+  const sign_in_btn = document.querySelector("#sign-in-btn");
+  const sign_up_btn = document.querySelector("#sign-up-btn");
+  const container = document.querySelector(".container");
+
+  sign_up_btn.addEventListener("click", () => {
+    container.classList.add("sign-up-mode");
+  });
+
+  sign_in_btn.addEventListener("click", () => {
+    container.classList.remove("sign-up-mode");
+  });
+</script>
+<script>
+ // <!-- Verify OTP -->
+  let otp = document.querySelector('#otp');
+ 
+  for(let pin of otp.children) {
+    pin.onkeyup = function() {
+      if($(this).val()) {
+        if(pin.nextElementSibling) {
+          pin.nextElementSibling.focus();
+        }
+      }
+    }
+  }
+  let otpPW = document.querySelector('#otp_PW');
+ 
+  for(let pin of otpPW.children) {
+    pin.onkeyup = function() {
+      if($(this).val()) {
+        if(pin.nextElementSibling) {
+          pin.nextElementSibling.focus();
+        }
+      }
+    }
+  }
+</script>
+

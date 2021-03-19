@@ -1,0 +1,19 @@
+<div ng-controller="ShellController as vm">
+  <!-- start header-desktop -->
+  <div class="clearfix" ng-show='vm.haveHeader'>
+    <ht-top-desktop-nav navline="vm.navline"></ht-top-desktop-nav>
+  </div>
+  <!-- end header-desktop -->
+  <section id="content" class="content">
+      <div ng-include="'app/layout/sidebar.html'" ng-show='vm.haveSidebar'></div>
+
+      <div ui-view class="shuffle-animation"></div>
+
+
+    <!-- <div ngplus-overlay ngplus-overlay-delay-in="50" ngplus-overlay-delay-out="700" ngplus-overlay-animation="dissolve-animation">
+      <img src="images/busy.gif" />
+
+      <div class="page-spinner-message overlay-message">{{vm.busyMessage}}</div>
+    </div> -->
+  </section>
+</div>

@@ -1,0 +1,417 @@
+<header class="navbar-fixed-top">
+  <div class="header-logo"></div>
+  <div class="header-title">
+    <a href="/">
+      <h6>WiKi</h6>
+    </a>
+  </div>
+  <div class="header-content-wrapper">
+    <form class="header-search">
+      <div class="header-content-search form-control">
+        <input type="text" style="width: 230px;position: relative;left: 0px;" placeholder="Tìm kiếm bạn bè...">
+        <button type="btn-search">
+          <a href="/FindFriend"><i class="fa fa-search"></i></a>
+        </button>
+      </div>
+    </form>
+    <!-- <a href="/FindFriend" class="link-find-friend">Tìm kiếm</a> -->
+    <ul class="control-block">
+      <li class="control-icon {{active}}" ng-click="showDropdownMessage()">
+        <a><i class="fa fa-comments-o"></i></a>
+        <div class="label-avatar bg-blue">6</div>
+        <div class="message-dropdown fadein fadeout" ng-show="isShowDropdownMessage">
+          <div class="dropdown-title">
+            <p class="recent-msg">tin nhắn gần đây</p>
+            <div class="message-btn-group">
+              <button>Tạo nhóm</button>
+              <button>Tạo tin nhắn</button>
+            </div>
+          </div>
+          <ul class="dropdown-msg-list">
+            <li class="msg-list-item d-flex justify-content-between">
+              <div class="profile-thumb">
+                <figure class="profile-thumb-middle">
+                  <img src="/images/avatar.jpg" alt="profile picture" height="45px" width="45px" style="border-radius: 100%;">
+                </figure>
+              </div>
+              <div class="msg-content">
+                <h6 class="msg-content-author">
+                  <a href="/">Anhs Truongw</a>
+                </h6>
+                <p>
+                  Many desktop publishing packages and web page editors now use Lorem Ipsum as their default
+                </p>
+              </div>
+              <div class="msg-time">
+                <p>25-12-2019</p>
+              </div>
+            </li>
+            <li class="msg-list-item d-flex justify-content-between">
+              <div class="profile-thumb">
+                <figure class="profile-thumb-middle">
+                  <img src="/images/avatar.jpg" alt="profile picture" height="45px" width="45px" style="border-radius: 100%;">
+                </figure>
+              </div>
+              <div class="msg-content">
+                <h6 class="msg-content-author">
+                  <a href="/">Anhs Truongw</a>
+                </h6>
+                <p>
+                  Many desktop publishing packages and web page editors now use Lorem Ipsum as their default
+                </p>
+              </div>
+              <div class="msg-time">
+                <p>25-12-2019</p>
+              </div>
+            </li>
+            <li class="msg-list-item d-flex justify-content-between">
+              <div class="profile-thumb">
+                <figure class="profile-thumb-middle">
+                  <img src="/images/avatar.jpg" alt="profile picture" height="45px" width="45px" style="border-radius: 100%;">
+                </figure>
+              </div>
+              <div class="msg-content">
+                <h6 class="msg-content-author">
+                  <a href="/">Anhs Truongw</a>
+                </h6>
+                <p>
+                  Many desktop publishing packages and web page editors now use Lorem Ipsum as their default
+                </p>
+              </div>
+              <div class="msg-time">
+                <p>25-12-2019</p>
+              </div>
+            </li>
+          </ul>
+          <div class="dropdown-footer d-flex justify-content-between">
+            <button>Xem tất cả trong tin nhắn</button>
+            <button>Đánh dấu đã đọc tất cả</button>
+          </div>
+        </div>
+      </li>
+      <li class="control-icon" ng-click="showDropdown()">
+        <a><i class="fa fa-gratipay"></i></a>
+        <div class="label-avatar bg-purple">2</div>
+        <div class="message-dropdown fadein fadeout notified-dropdown" ng-show="isShowDropdown">
+          <div class="dropdown-title">
+            <p class="recent-msg">thông báo</p>
+          </div>
+          <ul class="dropdown-msg-list">
+            <li class="msg-list-item d-flex justify-content-between">
+              <div class="profile-thumb">
+                <figure class="profile-thumb-middle">
+                  <img src="/images/avatar.jpg" alt="profile picture" height="45px" width="45px" style="border-radius: 100%;">
+                </figure>
+              </div>
+              <div class="msg-content notified-content">
+                <a href="/">Anhs Truongw, </a>
+                <a href="/">Mú</a>
+                <p>
+                  và 35 người khác đã bình luận hình ảnh của bạn
+                </p>
+              </div>
+              <div class="msg-time">
+                <p>25-12-2019</p>
+              </div>
+            </li>
+            <li class="msg-list-item d-flex justify-content-between">
+              <div class="profile-thumb">
+                <figure class="profile-thumb-middle">
+                  <img src="/images/avatar.jpg" alt="profile picture" height="45px" width="45px" style="border-radius: 100%;">
+                </figure>
+              </div>
+              <div class="msg-content notified-content">
+                <a href="/">Anhs Truongw, </a>
+                <a href="/">Mú</a>
+                <p>
+                  và 35 người khác đã bình luận hình ảnh của bạn
+                </p>
+              </div>
+              <div class="msg-time">
+                <p>25-12-2019</p>
+              </div>
+            </li>
+            <li class="msg-list-item d-flex justify-content-between">
+              <div class="profile-thumb">
+                <figure class="profile-thumb-middle">
+                  <img src="/images/avatar.jpg" alt="profile picture" height="45px" width="45px" style="border-radius: 100%;">
+                </figure>
+              </div>
+              <div class="msg-content notified-content">
+                <a href="/">Anhs Truongw, </a>
+                <a href="/">Mú</a>
+                <p>
+                  và 35 người khác đã bình luận hình ảnh của bạn
+                </p>
+              </div>
+              <div class="msg-time">
+                <p>25-12-2019</p>
+              </div>
+            </li>
+          </ul>
+          <div class="dropdown-footer d-flex justify-content-between">
+            <button>Xem tất cả trong thông báo</button>
+            <button>Đánh dấu đã đọc tất cả</button>
+          </div>
+        </div>
+      </li>
+      <li class="control-icon author-page" ng-click="showDropdownProfile()">
+        <a class="author-thumb">
+          <img src="/images/avatar.jpg" width="35px">
+          <span class="icon-status online"></span>
+        </a>
+        <a class="author-name">
+          <div class="author-title">
+            {{vm.currentUser.UserName}}
+            <i class="fa fa-angle-down"></i>
+          </div>
+          <!-- <span class="author-subtitle">
+            Bes Anhhhh
+          </span> -->
+        </a>
+        <div class="message-dropdown fadein fadeout profile-dropdown" ng-show="isShowProfile">
+          <div class="profile-dropdown-head">
+            <h5 class="name">
+              <a>{{vm.currentUser.UserName}}</a>
+            </h5>
+            <!-- <a href="/" class="email">hoaianh911.uit@gmail.com</a> -->
+          </div>
+          <div class="profile-dropdown-body">
+            <ul>
+              <li>
+                <a href="/profile">
+                  <i class="fa fa-user"></i>Trang cá nhân</a>
+              </li>
+              <li>
+                <a href="#">
+                  <i class="fa fa-envelope"></i>Tin nhắn</a>
+              </li>
+              <li>
+                <a href="#">
+                  <i class="fa fa-file-text-o"></i>Hoạt động</a>
+              </li>
+            </ul>
+            <ul>
+              <li>
+                <a href="/">
+                  <i class="fa fa-cog"></i>Cài đặt</a>
+              </li>
+              <li>
+                <a ng-click = "Logout()">
+                  <i class="fa fa-sign-out"></i>Đăng xuất</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <ul class="d-flex control-block-mobile">
+      <li class="control-icon {{active}}" ng-click="showDropdownMessage()">
+        <a><i class="fa fa-comments-o"></i></a>
+        <div class="label-avatar bg-blue">6</div>
+        <div class="message-dropdown fadein fadeout" ng-show="isShowDropdownMessage">
+          <div class="dropdown-title">
+            <p class="recent-msg">tin nhắn gần đây</p>
+            <div class="message-btn-group">
+              <button>Tạo nhóm</button>
+              <button>Tạo tin nhắn</button>
+            </div>
+          </div>
+          <ul class="dropdown-msg-list">
+            <li class="msg-list-item d-flex justify-content-between">
+              <div class="profile-thumb">
+                <figure class="profile-thumb-middle">
+                  <img src="/images/avatar.jpg" alt="profile picture" height="45px" width="45px" style="border-radius: 100%;">
+                </figure>
+              </div>
+              <div class="msg-content">
+                <h6 class="msg-content-author">
+                  <a href="/">Anhs Truongw</a>
+                </h6>
+                <p>
+                  Many desktop publishing packages and web page editors now use Lorem Ipsum as their default
+                </p>
+              </div>
+              <div class="msg-time">
+                <p>25-12-2019</p>
+              </div>
+            </li>
+            <li class="msg-list-item d-flex justify-content-between">
+              <div class="profile-thumb">
+                <figure class="profile-thumb-middle">
+                  <img src="/images/avatar.jpg" alt="profile picture" height="45px" width="45px" style="border-radius: 100%;">
+                </figure>
+              </div>
+              <div class="msg-content">
+                <h6 class="msg-content-author">
+                  <a href="/">Anhs Truongw</a>
+                </h6>
+                <p>
+                  Many desktop publishing packages and web page editors now use Lorem Ipsum as their default
+                </p>
+              </div>
+              <div class="msg-time">
+                <p>25-12-2019</p>
+              </div>
+            </li>
+            <li class="msg-list-item d-flex justify-content-between">
+              <div class="profile-thumb">
+                <figure class="profile-thumb-middle">
+                  <img src="/images/avatar.jpg" alt="profile picture" height="45px" width="45px" style="border-radius: 100%;">
+                </figure>
+              </div>
+              <div class="msg-content">
+                <h6 class="msg-content-author">
+                  <a href="/">Anhs Truongw</a>
+                </h6>
+                <p>
+                  Many desktop publishing packages and web page editors now use Lorem Ipsum as their default
+                </p>
+              </div>
+              <div class="msg-time">
+                <p>25-12-2019</p>
+              </div>
+            </li>
+          </ul>
+          <div class="dropdown-footer d-flex justify-content-between">
+            <button>Xem tất cả trong tin nhắn</button>
+            <button>Đánh dấu đã đọc tất cả</button>
+          </div>
+        </div>
+      </li>
+      <li class="control-icon" ng-click="showDropdown()">
+        <a><i class="fa fa-gratipay"></i></a>
+        <div class="label-avatar bg-purple">2</div>
+        <div class="message-dropdown fadein fadeout notified-dropdown" ng-show="isShowDropdown">
+          <div class="dropdown-title">
+            <p class="recent-msg">thông báo</p>
+          </div>
+          <ul class="dropdown-msg-list">
+            <li class="msg-list-item d-flex justify-content-between">
+              <div class="profile-thumb">
+                <figure class="profile-thumb-middle">
+                  <img src="/images/avatar.jpg" alt="profile picture" height="45px" width="45px" style="border-radius: 100%;">
+                </figure>
+              </div>
+              <div class="msg-content notified-content">
+                <a href="/">Anhs Truongw, </a>
+                <a href="/">Mú</a>
+                <p>
+                  và 35 người khác đã bình luận hình ảnh của bạn
+                </p>
+              </div>
+              <div class="msg-time">
+                <p>25-12-2019</p>
+              </div>
+            </li>
+            <li class="msg-list-item d-flex justify-content-between">
+              <div class="profile-thumb">
+                <figure class="profile-thumb-middle">
+                  <img src="/images/avatar.jpg" alt="profile picture" height="45px" width="45px" style="border-radius: 100%;">
+                </figure>
+              </div>
+              <div class="msg-content notified-content">
+                <a href="/">Anhs Truongw, </a>
+                <a href="/">Mú</a>
+                <p>
+                  và 35 người khác đã bình luận hình ảnh của bạn
+                </p>
+              </div>
+              <div class="msg-time">
+                <p>25-12-2019</p>
+              </div>
+            </li>
+            <li class="msg-list-item d-flex justify-content-between">
+              <div class="profile-thumb">
+                <figure class="profile-thumb-middle">
+                  <img src="/images/avatar.jpg" alt="profile picture" height="45px" width="45px" style="border-radius: 100%;">
+                </figure>
+              </div>
+              <div class="msg-content notified-content">
+                <a href="/">Anhs Truongw, </a>
+                <a href="/">Mú</a>
+                <p>
+                  và 35 người khác đã bình luận hình ảnh của bạn
+                </p>
+              </div>
+              <div class="msg-time">
+                <p>25-12-2019</p>
+              </div>
+            </li>
+          </ul>
+          <div class="dropdown-footer d-flex justify-content-between">
+            <button>Xem tất cả trong thông báo</button>
+            <button>Đánh dấu đã đọc tất cả</button>
+          </div>
+        </div>
+        
+      </li>
+      <li class="control-icon" ng-click="showSearch()">
+        <a><i class="fa fa-search"></i></a>
+        <div class="message-dropdown fadein fadeout search-dropdown" ng-show="isShowSearch">
+          <form class="mob-search-inner">
+            <input type="text" placeholder="search" class="mob-search-field">
+            <button type="btn-search" class="mod-search-btn">
+              <i class="fa fa-search"></i>
+            </button>
+          </form>
+        </div>
+      </li>
+      <li class="control-icon author-page" ng-click="showDropdownProfile()">
+        <a class="author-thumb">
+          <img src="/images/avatar.jpg" width="35px">
+          <span class="icon-status online"></span>
+        </a>
+        <div class="message-dropdown fadein fadeout profile-dropdown" ng-show="isShowProfile">
+          <div class="profile-dropdown-head">
+            <h5 class="name">
+              <a>{{vm.currentUser.UserName}}</a>
+            </h5>
+            <!-- <a href="/" class="email">hoaianh911.uit@gmail.com</a> -->
+          </div>
+          <div class="profile-dropdown-body">
+            <ul>
+              <li>
+                <a href="/profile">
+                  <i class="fa fa-user"></i>Trang cá nhân</a>
+              </li>
+              <li>
+                <a href="#">
+                  <i class="fa fa-envelope"></i>Tin nhắn</a>
+              </li>
+              <li>
+                <a href="#">
+                  <i class="fa fa-file-text-o"></i>Hoạt động</a>
+              </li>
+            </ul>
+            <ul>
+              <li>
+                <a href="/">
+                  <i class="fa fa-cog"></i>Cài đặt</a>
+              </li>
+              <li>
+                <a ng-click = "Logout()">
+                  <i class="fa fa-sign-out"></i>Đăng xuất</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</header>
+<!-- mobile header -->
+<!-- <header class="navbar-fixed-top">
+  <div class="mobile-logo"></div>
+  <div class="mobile-menu w-100">
+    <ul>
+      <li>
+        <button class="notified request-trigger">
+      </li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+  </div>
+  <div class="mobile-header-profile"></div>
+</header> -->

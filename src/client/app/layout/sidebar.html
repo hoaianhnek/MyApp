@@ -1,0 +1,48 @@
+<div ng-controller="SidebarController as vm">
+  <ht-sidebar when-done-animating="vm.sidebarReady()">
+    <div class="fixed-sidebar">
+      <div class="fixed-sidebar-left">
+        <a href="" class="logo">
+          <div class="img-wrap">
+            <img src="images/logo.png">
+          </div>
+        </a>
+        <div class="mCustomScrollbar">
+          <ul class="left-menu">
+            <li>
+              <a href="/">
+                <i class="fa fa-newspaper-o" title="Trang chủ" data-placement="right"></i>
+                <!-- <span>New Feeds</span> -->
+              </a>
+            </li>
+            <li>
+              <a href="/PeopleNearly">
+                <i class="fa fa-users" title="Tìm kiếm quanh đây" data-placement="right"></i>
+              </a>
+            </li>
+            <li>
+              <a href="/Message">
+                <i class="fa fa-comments-o" title="Tin nhắn" data-placement="right"></i>
+              </a>
+            </li>
+            <li>
+              <a href="/Dating">
+                <i class="fa fa-heartbeat" title="Ghép đôi" data-placement="right"></i>
+              </a>
+            </li>
+            <li>
+              <a href="">
+                <i class="fa fa-headphones" title="Hát cho nhau nghe" data-placement="right"></i>
+              </a>
+            </li>
+            <li>
+              <a href="">
+                <i class="fa fa-pencil" title="Trắc nghiệm tình yêu" data-placement="right"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </ht-sidebar>
+</div>
