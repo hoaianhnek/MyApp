@@ -1063,7 +1063,7 @@ form {
 }
 
 @media (max-width: 570px) {
-  
+
 }
 //end responsive header
 /* Sidebar */
@@ -2827,6 +2827,94 @@ a {
   float: left;
   width: 100%;
 }
+//diaglog post
+.model-content .modal-header {
+  position: relative;
+}
+  .model-content .modal-header> h3 {
+    position: absolute;
+    color: #333333;
+    font-weight: 500;
+  }
+  .model-content .modal-header> button {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    padding: 0.5rem 1rem;
+    font-size: 20px;
+    font-weight: 500;
+    opacity: 0.5;
+    transition: all 0.5s;
+  }
+  .model-content .modal-header> button:hover {
+    opacity: 1;
+  }
+  .model-content .modal-body> textarea {
+    width: 100%;
+    padding: 15px;
+    resize: none;
+    height: 150px;
+    border: 1px solid #dddddd !important;
+    color: black;
+    font-size: 14px;
+  }
+  .model-content .modal-body> .row> .col-6 {
+    padding: 0px;
+    position: relative;
+    // box-shadow: 0px 0px 1px 1px #00000024;
+    border-radius: 15px;
+  }
+  .model-content .modal-body> .row> .col-6 label {
+    position: absolute;
+    height: 50px!important;
+    width: 30px!important;
+    line-height: 50px;
+    font-size: 16px!important;
+    cursor: pointer!important;
+    font-weight: 700;
+    margin-bottom: 0px;
+  }
+  .model-content .modal-body> .row> .col-6 label.upload-image {
+    width: 100% !important;
+    color: black;
+    padding-left: 50px;
+    box-shadow: 0 1px #fff inset,0 1px 5px rgba(0,0,0,0.2)!important;
+    border-radius: 10px;
+    font-weight: 400;
+  }
+  .model-content .modal-body> .row> .col-6 input {
+    padding-left: 50px !important;
+    height: 50px!important;
+    width: 100%!important;
+    box-shadow: 0 1px #fff inset,0 1px 5px rgba(0,0,0,0.2)!important;
+    border-radius: 10px !important;
+    outline: none;
+    cursor: pointer;
+    border-radius: 10px;
+    color: #333333;
+  }
+  .modal-content .modal-footer .btn-post {
+    background-color: @color_main;
+    border-color: @color_main;
+    color: #fff;
+    transition: all 0.3s;
+  }
+  .modal-content .modal-footer .btn-post:hover {
+    background-color: transparent;
+    color: @color_main;
+  }
+  .modal-content .modal-footer .text-link {
+    font-size: 12px;
+    font-weight: 400;
+    color: @color_main;
+  }
+  .modal-content .modal-footer .text-link:hover, .modal-content .modal-footer .text-link:hover i {
+    color: #dc2009ad;
+  }
+  .modal-content .modal-footer .text-link i {
+    color: @color_main;
+  }
+//end dialog post
 //left newfeed
 // user data
   #newfeed-view .main-section .user-data {
@@ -3058,6 +3146,16 @@ a {
             border-radius: .25rem;
             transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
             overflow: auto;
+          }
+          #newfeed-view .main-section .main-ws-sec .post-topbar textarea {
+            width: 100%;
+            height: 44px;
+            padding: 0px 20px !important;
+            position: relative;
+            line-height: 44px;
+            box-shadow: inset 0px 1px 10px 0px rgba(85,85,85,0.2) !important;
+            border-radius: 50px;
+            resize: none;
           }
             #newfeed-view .main-section .main-ws-sec .post-topbar .tab-content .dropdown-list-image {
               position: relative;
@@ -4708,7 +4806,7 @@ figure.avatar {
     transition: transform .3s ease-out;
     display: flex;
     align-items: center;
-    min-height: calc(100% - 1rem);
+    min-height: calc(50%);
   }
   @media screen and (min-width: 576px) {
     .modal-md {
@@ -4772,8 +4870,8 @@ figure.avatar {
   color: #212529;
 }
   .modal-content .modal-footer {
-    border-top: none;
-    padding: 0 30px 30px;
+    border-top: 1px solid #00000033;
+    padding: 15px;
   }
   .modal-content .modal-header .modal-title {
     display: flex;
@@ -4875,6 +4973,65 @@ figure.avatar {
 }
 .modal-content .modal-body .form-group .avatar-group figure.avatar:hover {
   z-index:1;
+}
+//modal zoom
+.picModal {
+  display: block; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 6; /* Sit on top */
+  padding-top: 50px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
+}
+.zoomPic {
+  margin: auto;
+  display: block;
+  width: 100%;
+  max-width: 500px;
+}
+/* Add Animation */
+.zoomPic {
+  -webkit-animation-name: zoom;
+  -webkit-animation-duration: 0.6s;
+  animation-name: zoom;
+  animation-duration: 0.6s;
+}
+
+@-webkit-keyframes zoom {
+  from {-webkit-transform:scale(0)}
+  to {-webkit-transform:scale(1)}
+}
+
+@keyframes zoom {
+  from {transform:scale(0)}
+  to {transform:scale(1)}
+}
+/* The Close Button */
+.closePic {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+.closePic:hover,
+.closePic:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px){
+  .zoomPic {
+      width: 100%;
+  }
 }
   //end modal size md
 // start dating

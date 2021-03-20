@@ -461,7 +461,7 @@
           <div class="col-lg-9 col-md-12 pd-left-none">
             <div class="main-ws-sec">
               <div class="post-topbar">
-                <ul>
+                <!-- <ul>
                   <li class="nav-item active">
                     <a class="nav-link" data-toggle="tab" href = "#sharePost">
                       <i class="fa fa-edit"></i>
@@ -480,31 +480,32 @@
                       Tải video
                     </a>
                   </li>
-                </ul>
-                <div class="tab-content">
-                  <div class="tab-pane active" id="sharePost">
-                    <div class="d-flex p-3 align-items-center w-100">
+                </ul> -->
+                <div>
+                  <div id="sharePost">
+                    <div class="d-flex p-3 w-100">
                       <div class="dropdown-list-image mr-3">
                         <img src="images/user-pic.png" width="40" height="40" class="rounded-circle">
                         <div class="status-indicator"></div>
                       </div>
                       <div class="w-100">
-                        <textarea placeholder="Hôm nay bạn thế nào?" class="form-controls border-0 p-0 shadow-none" rows="1"></textarea>
+                        <textarea placeholder="Hôm nay bạn thế nào?" class="form-controls border-0 p-0 shadow-none" rows="1"
+                        ng-click="vm.OpenPost()"></textarea>
                       </div>
                     </div>
                   </div>
-                  <div class="tab-pane" id="upload_image">
+                  <!-- <div class="tab-pane" id="upload_image">
                     <div class="p-3 w-100">
                       <textarea placeholder="Hôm nay bạn thế nào?" class="form-controls border-0 p-0 shadow-none" rows="3"></textarea>
                     </div>
-                  </div>
-                  <div class="tab-pane" id="contact">
+                  </div> -->
+                  <!-- <div class="tab-pane" id="contact">
                     <div class="p-3 w-100">
                       <textarea placeholder="Hôm nay bạn thế nào?" class="form-controls border-0 p-0 shadow-none" rows="3"></textarea>
                     </div>
-                  </div>
+                  </div> -->
                 </div>
-                <div class="border-top p-3 d-flex align-items-center">
+                <!-- <div class="border-top p-3 d-flex align-items-center">
                   <div class="mr-auto">
                     <a href="#" class="text-link">
                       <i class="fa fa-map-marker"></i>
@@ -515,7 +516,7 @@
                     <button type="button" class="btn btn-preview btn-sm">Xem thử</button>
                     <button type="button" class="btn btn-post btn-sm">Đăng</button>
                   </div>
-                </div>
+                </div> -->
               </div>
               <div class="post-section">
                 <div class="post-bar">
@@ -663,4 +664,52 @@
     </div>
   </div>
 </section>
-
+<!-- dialog -->
+<script type="text/ng-template" id="OpenPost.html">
+  <div class="model-content">
+    <div class="modal-header">
+      <h3>Bài Viết Mới</h3>
+      <button type="button" ng-click="vm.cancel()">
+        <span>x</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <textarea name="share" placeholder="Mô tả..." ng-required="required"></textarea>
+      <div class="row" style="margin-top:15px !important">
+        <div class="col-6" ng-file-upload>
+          <label for="filepost" style="left: 15px;">
+            <i class="fa fa-file-photo-o"></i>
+          </label>
+          <input type="file" id="filepost" style="display:none !important" multiple="true" ng-model="vm.images" accept="image/*"
+          onchange="angular.element(this).scope().SelectFile(event)">
+          <label for="filepost" class="upload-image" >Tải hình lên</label>
+        </div>
+        <div class="col-6 pl-4">
+          <label for="hashtagPost" style="padding-left: 10px;">
+            <i class="fa fa-hashtag"></i>
+          </label>
+          <input type="text" placeholder="Nhập tìm kiếm tag" id="hashtagPost">
+          <!-- <ul class="dropdown-menu"> -->
+        </div>
+      </div>
+      <ol style="padding: 0px;margin-top: 20px !important;list-style-type: none;" class="row">
+        <li ng-repeat="img in vm.PreviewImage" class="col-4 mb-5">
+          <img ng-src="{{img}}" width="100%" ng-click="vm.ZoomImage(img)" style="cursor:pointer;">
+        </li>
+      </ol>
+    </div>
+    <div class="modal-footer d-flex align-items-center">
+      <div class="mr-auto">
+        <a href="#" class="text-link">
+          <i class="fa fa-map-marker"></i>
+          Thêm vị trí
+        </a>
+      </div>
+      <button type="button" class="btn btn-post btn-sm">Đăng</button>
+    </div>
+  </div>
+  <div class="picModal" ng-show="vm.myZoom" ng-click="vm.closeZoomFunct()">
+    <span class="closePic" ng-click="vm.closeZoomFunct()">&times</span>
+    <img class="zoomPic" ng-src="{{vm.zoomImg}}">
+  </div>
+</script>
