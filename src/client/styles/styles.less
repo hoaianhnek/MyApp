@@ -2836,6 +2836,24 @@ a {
   width: 100%;
 }
 //diaglog post
+.modal-body .CancelBtn {
+  background-color: #E4E6EB;
+  transition: all 0.3s;
+  border: 1px solid #E4E6EB;
+}
+.modal-body .CancelBtn:hover {
+  background-color: transparent;
+}
+.modal-body .saveBtn {
+  background-color: @color_main;
+  transition: all 0.3s;
+  border: 1px solid @color_main;
+  color: white;
+}
+.modal-body .saveBtn:not(:disabled):hover {
+  color: @color_main;
+  background-color: transparent;
+}
 .model-content .modal-header {
   position: relative;
 }
@@ -6194,6 +6212,9 @@ figure.avatar {
 }
 
 //dialog edit profile
+.modal-open .modal {
+  overflow-y: auto !important;
+}
 .modal-content .modal-body .title {
   color: @color-textmain;
 }
@@ -6227,7 +6248,7 @@ figure.avatar {
   font-weight: 700;
   transition: all 0.3s;
 }
-.modal-content .modal-body input[type="submit"]:hover {
+.modal-content .modal-body input[type="submit"]:not(:disabled):hover {
   background-color: transparent;
   color: @color_main;
 }

@@ -51,15 +51,23 @@
 
   var OpenEditProfileCtrl = 'OpenEditProfileCtrl';
   angular.module('app.user')
-  .controller(OpenEditProfileCtrl,['$scope', '$uibModalInstance', '$cookies', '$uibModal',OpenEditProfileFunction]);
+  .controller(OpenEditProfileCtrl,['$scope', '$uibModalInstance', '$cookies', '$uibModal', 'userService',
+  '$rootScope', 'RESPONSECODE', '$window',OpenEditProfileFunction]);
 
-  function OpenEditProfileFunction($scope, $uibModalInstance, $cookies, $uibModal) {
+  function OpenEditProfileFunction($scope, $uibModalInstance, $cookies, $uibModal, userService, $rootScope, RESPONSECODE,
+    $window) {
     var vm = this;
+    vm.isShowEditAbout = false;
+    var expirationDate = new Date();
+    expirationDate.setMonth(expirationDate.getMonth() + 12);
 
     vm.cancel = cancel;
     vm.currentUser = JSON.parse($cookies.get("user"));
+    vm.About = vm.currentUser.About;
     vm.EditAvatar = EditAvatar;
     vm.EditCover = EditCover;
+    vm.EditAbout = EditAbout;
+    vm.SubmitUpdateAbout = SubmitUpdateAbout;
 
     function cancel() {
       $uibModalInstance.dismiss('cancel');
@@ -84,6 +92,26 @@
         controllerAs: 'vm',
         backdrop: 'static',
         size: 'xl'
+      });
+    }
+
+    function EditAbout() {
+      vm.isShowEditAbout = !vm.isShowEditAbout;
+    }
+
+    function SubmitUpdateAbout() {
+      $rootScope.showSplash = true;
+
+      userService.SubmitUpdateAbout(vm.About, vm.currentUser.Id).then(function(result) {
+        $rootScope.showSplash = false;
+        if(result.data.ResponseCode == RESPONSECODE.Ok) {
+          toastr.success("","Cập nhật thành công");
+          vm.currentUser.About = result.data.Dto;
+          $cookies.put("user",JSON.stringify(vm.currentUser), {'expires': expirationDate });
+          $window.location.reload();
+        } else {
+          toastr.error("","Cập nhật thất bại")
+        }
       });
     }
   }
@@ -121,23 +149,20 @@
 
     function SubmitAvatarProfile() {
       $rootScope.showSplash = true;
-      if(vm.PreviewImage == vm.currentUser.Avatar) {
-        toastr.error('','Vui lòng tải ảnh lên');
+
+      vm.Image = vm.PreviewImage.slice(vm.PreviewImage.indexOf('base64,') + 7);
+
+      userService.SubmitAvatarProfile(vm.Image, vm.currentUser.Id).then(function(result) {
         $rootScope.showSplash = false;
-      } else {
-        vm.Image = vm.PreviewImage.slice(vm.PreviewImage.indexOf('base64,') + 7);
-        userService.SubmitAvatarProfile(vm.Image, vm.currentUser.Id).then(function(result) {
-          $rootScope.showSplash = false;
-          if(result.data.ResponseCode == RESPONSECODE.Ok) {
-            toastr.success("","Cập nhật thành công");
-            vm.currentUser.Avatar = result.data.Dto;
-            $cookies.put("user",JSON.stringify(vm.currentUser), {'expires': expirationDate });
-            $window.location.reload();
-          } else {
-            toastr.error("","Cập nhật thất bại")
-          }
-        });
-      }
+        if(result.data.ResponseCode == RESPONSECODE.Ok) {
+          toastr.success("","Cập nhật thành công");
+          vm.currentUser.Avatar = result.data.Dto;
+          $cookies.put("user",JSON.stringify(vm.currentUser), {'expires': expirationDate });
+          $window.location.reload();
+        } else {
+          toastr.error("","Cập nhật thất bại")
+        }
+      });
     }
   }
 
@@ -173,24 +198,20 @@
 
     function SubmitCoverProfile() {
       $rootScope.showSplash = true;
-      if(vm.PreviewImage == vm.currentUser.CoverImage) {
-        toastr.error('','Vui lòng tải ảnh lên');
-        $rootScope.showSplash = false;
-      } else {
-        vm.Image = vm.PreviewImage.slice(vm.PreviewImage.indexOf('base64,') + 7);
 
-        userService.SubmitCoverProfile(vm.Image, vm.currentUser.Id).then(function(result) {
-          $rootScope.showSplash = false;
-          if(result.data.ResponseCode == RESPONSECODE.Ok) {
-            toastr.success("","Cập nhật thành công");
-            vm.currentUser.CoverImage = result.data.Dto;
-            $cookies.put("user",JSON.stringify(vm.currentUser), {'expires': expirationDate });
-            $window.location.reload();
-          } else {
-            toastr.error("","Cập nhật thất bại")
-          }
-        });
-      }
+      vm.Image = vm.PreviewImage.slice(vm.PreviewImage.indexOf('base64,') + 7);
+
+      userService.SubmitCoverProfile(vm.Image, vm.currentUser.Id).then(function(result) {
+        $rootScope.showSplash = false;
+        if(result.data.ResponseCode == RESPONSECODE.Ok) {
+          toastr.success("","Cập nhật thành công");
+          vm.currentUser.CoverImage = result.data.Dto;
+          $cookies.put("user",JSON.stringify(vm.currentUser), {'expires': expirationDate });
+          $window.location.reload();
+        } else {
+          toastr.error("","Cập nhật thất bại")
+        }
+      });
     }
   }
 })();

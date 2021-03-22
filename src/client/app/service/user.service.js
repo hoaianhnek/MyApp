@@ -48,13 +48,22 @@
         }
         return $http.put(config.baseServiceUri + prefixUsers + "updatecover", request);
       }
+
+      function SubmitUpdateAbout(about, id) {
+        var request = {
+          Id: id,
+          About: about
+        }
+        return $http.put(config.baseServiceUri + prefixUsers + "updateabout", request);
+      }
       var service = {
           userRegister: userRegister,
           checkCustomerCheckExisted: checkCustomerCheckExisted,
           UpdatePassword: UpdatePassword,
           UserSignIn: UserSignIn,
           SubmitAvatarProfile: SubmitAvatarProfile,
-          SubmitCoverProfile: SubmitCoverProfile
+          SubmitCoverProfile: SubmitCoverProfile,
+          SubmitUpdateAbout: SubmitUpdateAbout
       };
       return service;
     }
