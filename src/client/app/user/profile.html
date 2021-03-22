@@ -1,6 +1,7 @@
 <div id="profile-view" class="dating-full-width mainbar">
   <div class="container db-social">
-    <div class="jumbotron jumbotron-fluid"></div>
+    <div class="jumbotron jumbotron-fluid" style="background:url({{vm.currentUser.CoverImage}})">
+    </div>
     <div class="profile-menu-area bg-white">
       <div class="container">
         <div class="row align-items-center">
@@ -8,7 +9,7 @@
             <div class="profile-picture-box">
               <figure class="profile-picture">
                 <a>
-                  <img src="../images/linh.jpg" style="width: 220px;height: 235px;">
+                  <img src="{{vm.currentUser.Avatar}}" style="width: 220px;height: 235px;">
                 </a>
               </figure>
             </div>
@@ -21,9 +22,6 @@
                     <li class="active" >
                       <a data-toggle="tab" href = "#post">Bài đăng</a>
                     </li>
-                    <!-- <li >
-                      <a href="#about" data-toggle="tab">Giới thiệu</a>
-                    </li> -->
                     <li>
                       <a href="#images" data-toggle="tab">Hình Ảnh</a>
                     </li>
@@ -37,7 +35,7 @@
           </div>
           <div class="col-lg-3 col-md-3 d-none d-md-block">
             <div class="profile-edit-panel">
-              <button class="edit-btn">
+              <button class="edit-btn" ng-click="vm.OpenEditProfile()">
                 chỉnh sửa trang cá nhân
               </button>
             </div>
@@ -56,105 +54,21 @@
                   Giới thiệu
                 </h4>
                 <div class="widget-body">
-                  <div class="about-author">
-                    <p>I Don’t know how? But i believe that it is possible one day if i stay with my dream all time</p>
+                  <!-- <h3>{{vm.currentUser.UserName}}</h3> -->
+                  <h3 class="about-author">
+                    <p>{{vm.currentUser.About}}</p>
                     <ul class="author-into-list">
                       <li>
-                        <a href="">
-                          <i class="fa fa-suitcase"></i> Thiết kế Website
-                        </a>
+                        <i class="fa fa-users"></i> {{vm.currentUser.UserName}}
                       </li>
                       <li>
-                        <a href="">
-                          <i class="fa fa-home"></i> Krong Nô, Đăk Nông
-                        </a>
+                        <i class="fa fa-mobile mr-3"></i> {{vm.currentUser.MobilePhone}}
                       </li>
                       <li>
-                        <a href="">
-                          <i class="fa fa-map"></i> Phú Nhuận, HCM
-                        </a>
-                      </li>
-                      <li>
-                        <a href="">
-                          <i class="fa fa-heartbeat"></i> Du lịch, đá bóng
-                        </a>
+                        <i class="fa fa-map"></i> Phú Nhuận, HCM
                       </li>
                     </ul>
-                  </div>
-                </div>
-              </div>
-              <div class="card widget-item">
-                <h4 class="widget-title">
-                  Ảnh nổi bật
-                </h4>
-                <div class="widget-body">
-                  <div class="sweet-gallery img-gallery">
-                    <div class="row row-5">
-                      <div class="col-4">
-                        <div class="gallery-item">
-                          <figure class="post-thumb">
-                            <a href="" class="gallery-selector">
-                              <img src="../images/linh.jpg">
-                            </a>
-                          </figure>
-                        </div>
-                      </div>
-                      <div class="col-4">
-                        <div class="gallery-item">
-                          <figure class="post-thumb">
-                            <a href="" class="gallery-selector">
-                              <img src="../images/linh.jpg">
-                            </a>
-                          </figure>
-                        </div>
-                      </div>
-                      <div class="col-4">
-                        <div class="gallery-item">
-                          <figure class="post-thumb">
-                            <a href="" class="gallery-selector">
-                              <img src="../images/linh.jpg">
-                            </a>
-                          </figure>
-                        </div>
-                      </div>
-                      <div class="col-4">
-                        <div class="gallery-item">
-                          <figure class="post-thumb">
-                            <a href="" class="gallery-selector">
-                              <img src="../images/linh.jpg">
-                            </a>
-                          </figure>
-                        </div>
-                      </div>
-                      <div class="col-4">
-                        <div class="gallery-item">
-                          <figure class="post-thumb">
-                            <a href="" class="gallery-selector">
-                              <img src="../images/linh.jpg">
-                            </a>
-                          </figure>
-                        </div>
-                      </div>
-                      <div class="col-4">
-                        <div class="gallery-item">
-                          <figure class="post-thumb">
-                            <a href="" class="gallery-selector">
-                              <img src="../images/linh.jpg">
-                            </a>
-                          </figure>
-                        </div>
-                      </div>
-                      <div class="col-4">
-                        <div class="gallery-item">
-                          <figure class="post-thumb">
-                            <a href="" class="gallery-selector">
-                              <img src="../images/linh.jpg">
-                            </a>
-                          </figure>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  </h3>
                 </div>
               </div>
             </aside>
@@ -174,8 +88,7 @@
                 <!-- share content box start -->
                 <div class="share-content-box w-100" >
                   <form action="" class="share-text-box">
-                    <textarea name="share" class="share-text-field" placeholder="Bạn đang nghĩ gì"></textarea>
-                    <button class="btn-share" type="submit">đăng</button>
+                    <textarea name="share" class="share-text-field" placeholder="Hôm nay bạn thế nào?" ng-click="vm.OpenPost()"></textarea>
                   </form>
                 </div>
               </div>
@@ -1183,4 +1096,122 @@
     </div>
   </div>
 </div>
+<!-- dialog -->
+<script type="text/ng-template" id="OpenPost.html">
+  <div class="model-content">
+    <div class="modal-header">
+      <h3>Bài Viết Mới</h3>
+      <button type="button" ng-click="vm.cancel()">
+        <span>x</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <textarea name="share" placeholder="Mô tả..." ng-required="required"></textarea>
+      <div class="row" style="margin-top:15px !important">
+        <div class="col-6" ng-file-upload>
+          <label for="filepost" style="left: 15px;">
+            <i class="fa fa-file-photo-o"></i>
+          </label>
+          <input type="file" id="filepost" style="display:none !important" multiple="true" ng-model="vm.images" accept="image/*"
+          onchange="angular.element(this).scope().SelectFile(event)">
+          <label for="filepost" class="upload-image" >Tải hình lên</label>
+        </div>
+        <div class="col-6 pl-4">
+          <label for="hashtagPost" style="padding-left: 10px;">
+            <i class="fa fa-hashtag"></i>
+          </label>
+          <input type="text" placeholder="Nhập tìm kiếm tag" id="hashtagPost">
+          <!-- <ul class="dropdown-menu"> -->
+        </div>
+      </div>
+      <ol style="padding: 0px;margin-top: 20px !important;list-style-type: none;" class="row">
+        <li ng-repeat="img in vm.PreviewImage" class="col-4 mb-5">
+          <img ng-src="{{img}}" width="100%" ng-click="vm.ZoomImage(img)" style="cursor:pointer;">
+        </li>
+      </ol>
+    </div>
+    <div class="modal-footer d-flex align-items-center">
+      <div class="mr-auto">
+        <a href="#" class="text-link">
+          <i class="fa fa-map-marker"></i>
+          Thêm vị trí
+        </a>
+      </div>
+      <button type="button" class="btn btn-post btn-sm">Đăng</button>
+    </div>
+  </div>
+  <div class="picModal" ng-show="vm.myZoom" ng-click="vm.closeZoomFunct()">
+    <span class="closePic" ng-click="vm.closeZoomFunct()">&times</span>
+    <img class="zoomPic" ng-src="{{vm.zoomImg}}">
+  </div>
+</script>
+
+<!-- edit profile -->
+<script type="text/ng-template" id="OpenEditProfile.html">
+  <div class="model-content">
+    <div class="modal-header">
+      <h3>Chỉnh Sửa Trang Cá Nhân</h3>
+      <button type="button" ng-click="vm.cancel()">
+        <span>x</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="profile-avatar">
+        <div class="title d-flex justify-content-between">
+          <span>Ảnh đại diện</span>
+          <a ng-click="vm.EditAvatar()">Chỉnh sửa</a>
+        </div>
+        <div class="content">
+          <img src="{{vm.currentUser.Avatar}}" height="168px" width="168px">
+        </div>
+      </div>
+      <div class="profile-coverImage">
+        <div class="title d-flex justify-content-between">
+          <span>Ảnh bìa</span>
+          <a>Chỉnh sửa</a>
+        </div>
+        <div class="content">
+          <img src="../../images/1.jpg" height="150px" width="300px">
+        </div>
+      </div>
+      <div class="profile-about">
+        <div class="title d-flex justify-content-between">
+          <span>Tiểu sử</span>
+          <a>Chỉnh sửa</a>
+        </div>
+        <div class="content">
+          <span class="text-dark">Sống và làm những gì mình thích</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</script>
+
+<!-- edit avatar -->
+<script type="text/ng-template" id="OpenEditAvatar.html">
+  <div class="model-content">
+    <div class="modal-header">
+      <h3>Chỉnh Sửa Ảnh Đại Diện</h3>
+      <button type="button" ng-click="vm.cancel()">
+        <span>x</span>
+      </button>
+    </div>
+    <div class="modal-body" style="text-align: center;">
+      <div class="profile-avatar row">
+        <div class="col-6" ng-file-upload>
+          <label for="filepost">
+            <i class="fa fa-file-photo-o"></i>
+          </label>
+          <input type="file" id="filepost" style="display:none !important" ng-model="vm.images" accept="image/*"
+          onchange="angular.element(this).scope().SelectFile(event)">
+          <label for="filepost" class="upload-image" >Tải hình lên</label>
+        </div>
+      </div>
+      <img ng-src="{{vm.PreviewImage}}" ng-click="vm.ZoomImage(vm.PreviewImage)" style="cursor:pointer;">
+      <form>
+        <input type="submit" value="Lưu" style="" class="mt-4" ng-click="vm.SubmitAvatarProfile()">
+      </form>
+    </div>
+  </div>
+</script>
 

@@ -5,10 +5,10 @@
     .module('app.user')
     .controller('LoginController', LoginController);
 
-  LoginController.$inject = ['$rootScope', '$q', 'dataservice', 'logger', 'spinner', 'userService', 'RESPONSECODE', 
+  LoginController.$inject = ['$rootScope', '$q', 'dataservice', 'logger', 'spinner', 'userService', 'RESPONSECODE',
   '$window', '$location', '$cookies'];
   /* @ngInject */
-  function LoginController($rootScope, $q, dataservice, logger, spinner, userService, RESPONSECODE, $window, $location, 
+  function LoginController($rootScope, $q, dataservice, logger, spinner, userService, RESPONSECODE, $window, $location,
   $cookies) {
     var vm = this;
     //variable declare
@@ -24,7 +24,7 @@
     vm.isShowResetPassword = false;
     vm.isShowResetPhone = false;
     vm.isShowVerifiedSignIn = false;
-    var expirationDate = new Date();  
+    var expirationDate = new Date();
     expirationDate.setMonth(expirationDate.getMonth() + 12);
 
     //function declare
@@ -34,12 +34,12 @@
     vm.showPassword = showPassword;
     vm.showPasswordCF = showPasswordCF;
     vm.UpdatePassword = UpdatePassword;
-    
+
     vm.checkUserCheckExistedUpdatePsw = checkUserCheckExistedUpdatePsw;
 
     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('container-verified', {
             'size': 'invisible'
-    }); 
+    });
 
     function Login() {
       $rootScope.showSplash = true;
@@ -52,6 +52,9 @@
             Id: result.data.Dto.Id,
             MobilePhone: result.data.Dto.MobilePhone,
             UserName: result.data.Dto.UserName,
+            About: result.data.Dto.About,
+            Avatar: result.data.Dto.Avatar,
+            CoverImage: result.data.Dto.CoverImage
           };
           $cookies.put("user", JSON.stringify(userCurrent), {'expires': expirationDate })
           localStorage.setItem("user", JSON.stringify(userCurrent));
@@ -109,7 +112,7 @@
         toastr.error("", "Mã Otp đã bị chặn");
       });
     }
-    
+
     function checkUserCheckExistedUpdatePsw() {
       $rootScope.showSplash = true;
       userService.checkCustomerCheckExisted(vm.mobilePhone).then(function(result) {
@@ -125,7 +128,7 @@
                   if(code.length == 6) {
                     console.log('huh')
                       $rootScope.showSplash = true;
-                      
+
                       confirmationResult.confirm(code).then(function (result) {
                           $('#showError1').html('');
                           toastr.success("Mã xác nhận chính xác");
@@ -181,10 +184,10 @@
         }
       });
     }
-    
+
     function showPassword() {
       if(vm.inputType == 'password') {
-          vm.inputType = "text";  
+          vm.inputType = "text";
       } else {
         vm.inputType = "password";
       }
@@ -192,7 +195,7 @@
 
     function showPasswordCF() {
       if(vm.inputTypeCF == 'password') {
-          vm.inputTypeCF = "text";  
+          vm.inputTypeCF = "text";
       } else {
         vm.inputTypeCF = "password";
       }
@@ -208,6 +211,9 @@
             Id: result.data.Dto.Id,
             MobilePhone: result.data.Dto.MobilePhone,
             UserName: result.data.Dto.UserName,
+            About: result.data.Dto.About,
+            Avatar: result.data.Dto.Avatar,
+            CoverImage: result.data.Dto.CoverImage
           };
           $cookies.put("user", JSON.stringify(userCurrent), {'expires': expirationDate })
           localStorage.setItem("user", JSON.stringify(userCurrent));

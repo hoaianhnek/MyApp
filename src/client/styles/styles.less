@@ -8,6 +8,7 @@
 @color-white: #FFF;
 @color-text: #F1F1F1;
 @color-textlight:#666666;
+@color-textmain: #333333;
 
 * {
     /*-webkit-box-shadow: none !important;
@@ -1423,7 +1424,7 @@ form {
 
     .mainbar .container {
         width: 95%;
-        padding: 0 !important;
+        padding: 0;
     }
 
 /* Pagination*/
@@ -1707,8 +1708,8 @@ form {
 
         body .container {
             width: 95%;
-            padding-left: 2.5%;
-            padding-right: 2.5%;
+            padding-left: 2.5% !important;
+            padding-right: 2.5% !important;
         }
 
     .content {
@@ -1783,7 +1784,7 @@ form {
         }
 
     .mainbar {
-        margin: 0;
+        // margin: 0;
         float: none;
     }
 
@@ -1859,12 +1860,19 @@ form {
     .sidebar {
         width: 200px;
     }
-
-    .mainbar {
-        margin-left: 200px;
-    }
+    // .mainbar {
+    //     margin-left: 200px;
+    // }
 }
-
+@media (max-width: 979px) {
+  .main-section-data .pd-right-none .user-data {
+    display: none;
+  }
+  .main-section-data .pd-right-none {
+    padding-left: 0px;
+    padding-right: 15px;
+  }
+}
 /*#region Widgets */
 
 /* maps */
@@ -2916,6 +2924,10 @@ a {
   }
 //end dialog post
 //left newfeed
+input[type="submit"]:disabled {
+  opacity: 0.6;
+  cursor: alias;
+}
 // user data
   #newfeed-view .main-section .user-data {
     text-align: center;
@@ -3250,18 +3262,76 @@ a {
             #newfeed-view .main-section .main-ws-sec .post-section .post-bar .post-topbar .ed-opts {
               float: right;
               position: relative;
-              top: 7px;
             }
+              // dropdown
+              #newfeed-view .main-section .main-ws-sec .post-section .post-bar .post-topbar .ed-opts .post-settings {
+                position: absolute;
+                background: #fff;
+                right: 0;
+                top: 100%;
+                width: 200px;
+                padding: 20px;
+                z-index: 9;
+                border-radius: 5px;
+                box-shadow: 0px 1px 15px 0px rgba(51, 51, 51, 0.2);
+                border: 1px solid #e5e5e5;
+                transition: 0.4s;
+                transform: translateY(30px);
+                opacity: 0;
+                visibility: hidden;
+              }
+              #newfeed-view .main-section .main-ws-sec .post-section .post-bar .post-topbar .ed-opts .post-settings::before {
+                right: 10px;
+                bottom: 100%;
+                content: "";
+                height: 20px;
+                position: absolute;
+                border-bottom: 20px solid #fff;
+                border-left: 10px solid transparent;
+                border-right: 10px solid transparent;
+              }
+              #newfeed-view .main-section .main-ws-sec .post-section .post-bar .post-topbar .ed-opts .post-settings ul {
+                padding: 0px !important;
+              }
+              #newfeed-view .main-section .main-ws-sec .post-section .post-bar .post-topbar .ed-opts .post-settings ul li {
+                display: list-item;
+                margin-bottom: 10px;
+                padding-bottom: 10px;
+                border-bottom: 1px solid #e5e5e5;
+              }
+              #newfeed-view .main-section .main-ws-sec .post-section .post-bar .post-topbar .ed-opts .post-settings ul li:last-child {
+                margin-bottom: 0;
+                padding-bottom: 0;
+                border: none;
+              }
+              #newfeed-view .main-section .main-ws-sec .post-section .post-bar .post-topbar .ed-opts .post-settings ul li:hover button {
+                color: @color_main;
+              }
+              #newfeed-view .main-section .main-ws-sec .post-section .post-bar .post-topbar .ed-opts .post-settings ul li> button {
+                color: #333333;
+                display: block;
+                font-size: 14px;
+                font-weight: 500;
+                text-transform: capitalize;
+                transition: all 0.3s;
+              }
+              #newfeed-view .main-section .main-ws-sec .post-section .post-bar .post-topbar .ed-opts:hover .post-settings {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(20px);
+              }
+              #newfeed-view .main-section .main-ws-sec .post-section .post-bar .post-topbar .ed-opts:hover .ed-opts-open i {
+                color: @color_main;
+              }
               #newfeed-view .main-section .main-ws-sec .post-section .post-bar .post-topbar .ed-opts a {
                 color: #b2b2b2;
                 font-size: 24px;
                 float: right;
                 position: relative;
-                left: 10px;
-                top: -10px;
               }
                 #newfeed-view .main-section .main-ws-sec .post-section .post-bar .post-topbar .ed-opts a i {
                   color: #b2b2b2;
+                  transition: all 0.3s;
                 }
           #newfeed-view .main-section .main-ws-sec .post-section .post-bar .post-content {
             padding-top: 18px;
@@ -3275,6 +3345,7 @@ a {
             #newfeed-view .main-section .main-ws-sec .post-section .post-bar .post-content .post-thumb-gallery {
               border-radius: 5px;
               overflow: hidden;
+              margin-top: 10px;
             }
               #newfeed-view .main-section .main-ws-sec .post-section .post-bar .post-content .post-thumb-gallery img {
                 width: 100%;
@@ -3316,6 +3387,56 @@ a {
                   vertical-align: text-bottom;
                   padding-left: 8px;
                 }
+          #newfeed-view .main-section .main-ws-sec .post-section .post-bar .post-comment img {
+            border-radius: 50%;
+          }
+          #newfeed-view .main-section .main-ws-sec .post-section .post-bar .post-comment .user-comment {
+            width: 100%;
+            position: relative;
+            line-height: 30px;
+          }
+          #newfeed-view .main-section .main-ws-sec .post-section .post-bar .post-comment .user-comment input[type="submit"] {
+            position: absolute;
+            right: 0px;
+            color: @color_main;
+            padding-right: 10px !important;
+            background-color: white;
+            font-size: 12px;
+            border-left: none !important;
+            border-radius: 5px !important;
+            font-weight: 500;
+          }
+          #newfeed-view .main-section .main-ws-sec .post-section .post-bar .post-comment .user-comment input[type="text"] {
+            border-radius: 5px !important;
+            padding-left: 10px !important;
+            color: #333333;
+          }
+          #newfeed-view .main-section .main-ws-sec .post-section .post-bar .post-comment .name-info-comment {
+            color: #333;
+            font-weight: bold;
+            font-size: 14px;
+          }
+          #newfeed-view .main-section .main-ws-sec .post-section .post-bar .post-comment .name-info-comment a {
+            transition: all 0.3s;
+          }
+          #newfeed-view .main-section .main-ws-sec .post-section .post-bar .post-comment .name-info-comment a:hover {
+            color: @color_main;
+          }
+          #newfeed-view .main-section .main-ws-sec .post-section .post-bar .post-comment .name-info-comment .font-weight-normal {
+            color: #acacac !important;
+            font-size: 13px;
+          }
+          #newfeed-view .main-section .main-ws-sec .post-section .post-bar .post-comment .content-comment {
+            font-size: 14px;
+            color: #333;
+            font-weight: normal;
+            white-space: pre-line;
+            word-wrap: break-word;
+          }
+          #newfeed-view .main-section .main-ws-sec .post-section .post-bar .post-comment .reply-comment {
+            font-size: 13px;
+            color: @color_blue;
+          }
   //end main newfeed posts
   //new feed right
   .pd-right-none {
@@ -5320,11 +5441,10 @@ figure.avatar {
 //start profile
 #profile-view .db-social .jumbotron {
   margin: 0;
-  background: url(../images/unnamed.jpg);
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
-  background-position: bottom center;
+  background-repeat: no-repeat !important;
+  background-attachment: fixed !important;
+  background-size: cover !important;
+  background-position: bottom center !important;
   color: #fff!important;
   height: 300px;
   position: relative;
@@ -5879,18 +5999,13 @@ figure.avatar {
 }
 #profile-view .profile-sidebar .about-author .author-into-list li {
   margin-bottom: 10px;
-}
-#profile-view .profile-sidebar .about-author .author-into-list li a {
   color: #333333;
   font-size: 14px;
   font-weight: 500;
   line-height: 1.3;
   transition: all 0.3s;
 }
-#profile-view .profile-sidebar .about-author .author-into-list li:hover a {
-  color: @color_main;
-}
-#profile-view .profile-sidebar .about-author .author-into-list li a i {
+#profile-view .profile-sidebar .about-author .author-into-list li i {
   color: @color_main;
   font-size: 20px;
   padding-right: 20px;
@@ -6076,6 +6191,51 @@ figure.avatar {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+//dialog edit profile
+.modal-content .modal-body .title {
+  color: @color-textmain;
+}
+.modal-content .modal-body a {
+  color: @color_main;
+}
+.modal-content .modal-body .title> span {
+  font-size: 1.5rem;
+  font-weight: 700;
+  padding-bottom: 5px;
+}
+.modal-content .modal-body .content {
+  text-align: center;
+}
+.modal-content .modal-body .profile-avatar {
+  text-align: center;
+}
+.modal-content .modal-body> img {
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+  margin-top: 70px;
+  border-radius: 50%;
+}
+.modal-content .modal-body input[type="submit"] {
+  background-color: @color_main;
+  padding: 5px 20px !important;
+  color: white;
+  border: 1px solid @color_main !important;
+  font-size: 14px !important;
+  font-weight: 700;
+  transition: all 0.3s;
+}
+.modal-content .modal-body input[type="submit"]:hover {
+  background-color: transparent;
+  color: @color_main;
+}
+.modal-content .modal-body .profile-avatar .content> img {
+  border-radius: 50%;
+}
+.modal-content .modal-body .profile-coverImage .content> img {
+  border-radius: 10px;
 }
 //start friends of profile
 #profile-view .ui-block-title {

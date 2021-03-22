@@ -24,6 +24,7 @@
         };
         return $http.post(config.baseServiceUri + prefixUsers + "updatepassword", request);
       }
+
       function UserSignIn(userName, password) {
         var request = {
           UserName: userName,
@@ -31,11 +32,20 @@
         };
         return $http.post(config.baseServiceUri + prefixUsers + "login", request);
       }
+
+      function SubmitAvatarProfile(image, id) {
+        var request = {
+          Id: id,
+          Avatar: image
+        }
+        return $http.post(config.baseServiceUri + prefixUsers + "updateavatar", request);
+      }
       var service = {
           userRegister: userRegister,
           checkCustomerCheckExisted: checkCustomerCheckExisted,
           UpdatePassword: UpdatePassword,
-          UserSignIn: UserSignIn
+          UserSignIn: UserSignIn,
+          SubmitAvatarProfile: SubmitAvatarProfile
       };
       return service;
     }

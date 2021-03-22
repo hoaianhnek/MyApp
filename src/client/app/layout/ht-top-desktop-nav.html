@@ -157,7 +157,7 @@
       </li>
       <li class="control-icon author-page" ng-click="showDropdownProfile()">
         <a class="author-thumb">
-          <img src="/images/avatar.jpg" width="35px">
+          <img src="{{vm.currentUser.Avatar}}" width="35px">
           <span class="icon-status online"></span>
         </a>
         <a class="author-name">
@@ -359,7 +359,7 @@
       </li>
       <li class="control-icon author-page" ng-click="showDropdownProfile()">
         <a class="author-thumb">
-          <img src="/images/avatar.jpg" width="35px">
+          <img src="{{vm.currentUser.Avatar}}" width="35px">
           <span class="icon-status online"></span>
         </a>
         <div class="message-dropdown fadein fadeout profile-dropdown" ng-show="isShowProfile">

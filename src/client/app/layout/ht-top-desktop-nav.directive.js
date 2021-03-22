@@ -33,7 +33,6 @@
         $rootScope.$watch('haveHeader', function(newValue, oldValue) {
           if($cookies.get("user") != undefined) {
             vm.currentUser = JSON.parse($cookies.get("user"));
-            console.log('user current:',vm.currentUser)
           }
         });
       }
