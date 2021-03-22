@@ -20,10 +20,10 @@
     $rootScope.haveHeader = true;
     $rootScope.haveSidebar = true;
     vm.currentUser = JSON.parse($cookies.get("user"));
-console.log(vm.currentUser)
 
     vm.OpenPost = OpenPost;
     vm.OpenEditProfile = OpenEditProfile;
+
 
     function OpenPost() {
       var modalOpenPost = $uibModal.open({
@@ -46,6 +46,7 @@ console.log(vm.currentUser)
         size: 'xl'
       });
     }
+
   }
 
   var OpenEditProfileCtrl = 'OpenEditProfileCtrl';
@@ -58,6 +59,7 @@ console.log(vm.currentUser)
     vm.cancel = cancel;
     vm.currentUser = JSON.parse($cookies.get("user"));
     vm.EditAvatar = EditAvatar;
+    vm.EditCover = EditCover;
 
     function cancel() {
       $uibModalInstance.dismiss('cancel');
@@ -68,6 +70,17 @@ console.log(vm.currentUser)
         animation: true,
         templateUrl: 'OpenEditAvatar.html',
         controller: 'OpenEditAvatarCtrl',
+        controllerAs: 'vm',
+        backdrop: 'static',
+        size: 'xl'
+      });
+    }
+
+    function EditCover() {
+      var modalEditCover = $uibModal.open({
+        animation: true,
+        templateUrl: 'OpenEditCover.html',
+        controller: 'OpenEditCoverCtrl',
         controllerAs: 'vm',
         backdrop: 'static',
         size: 'xl'
@@ -118,6 +131,59 @@ console.log(vm.currentUser)
           if(result.data.ResponseCode == RESPONSECODE.Ok) {
             toastr.success("","Cập nhật thành công");
             vm.currentUser.Avatar = result.data.Dto;
+            $cookies.put("user",JSON.stringify(vm.currentUser), {'expires': expirationDate });
+            $window.location.reload();
+          } else {
+            toastr.error("","Cập nhật thất bại")
+          }
+        });
+      }
+    }
+  }
+
+  var OpenEditCoverCtrl = 'OpenEditCoverCtrl';
+  angular.module('app.user')
+  .controller(OpenEditCoverCtrl,['$scope', '$uibModalInstance', '$cookies', 'userService', '$rootScope',
+  'RESPONSECODE', '$window',OpenEditCoverFunction]);
+  function OpenEditCoverFunction($scope, $uibModalInstance, $cookies, userService, $rootScope, RESPONSECODE, $window) {
+    var vm = this;
+
+    vm.cancel = cancel;
+    vm.SubmitCoverProfile = SubmitCoverProfile;
+
+    vm.currentUser = JSON.parse($cookies.get("user"));
+    var expirationDate = new Date();
+    expirationDate.setMonth(expirationDate.getMonth() + 12);
+
+    vm.PreviewImage = vm.currentUser.CoverImage;
+    function cancel() {
+      $uibModalInstance.dismiss('cancel');
+    }
+
+    $scope.SelectFile = function(event) {
+      for(var i=0;i<event.target.files.length;i++) {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+              vm.PreviewImage = e.target.result ;
+              $scope.$apply();
+          };
+        reader.readAsDataURL(event.target.files[i])
+      }
+    }
+
+    function SubmitCoverProfile() {
+      $rootScope.showSplash = true;
+      if(vm.PreviewImage == vm.currentUser.CoverImage) {
+        toastr.error('','Vui lòng tải ảnh lên');
+        $rootScope.showSplash = false;
+      } else {
+        vm.Image = vm.PreviewImage.slice(vm.PreviewImage.indexOf('base64,') + 7);
+
+        userService.SubmitCoverProfile(vm.Image, vm.currentUser.Id).then(function(result) {
+          $rootScope.showSplash = false;
+          if(result.data.ResponseCode == RESPONSECODE.Ok) {
+            toastr.success("","Cập nhật thành công");
+            vm.currentUser.CoverImage = result.data.Dto;
             $cookies.put("user",JSON.stringify(vm.currentUser), {'expires': expirationDate });
             $window.location.reload();
           } else {

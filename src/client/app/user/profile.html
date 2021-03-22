@@ -1,6 +1,6 @@
 <div id="profile-view" class="dating-full-width mainbar">
   <div class="container db-social">
-    <div class="jumbotron jumbotron-fluid" style="background:url({{vm.currentUser.CoverImage}})">
+    <div class="jumbotron jumbotron-fluid" style="background:url('{{vm.currentUser.CoverImage}}')">
     </div>
     <div class="profile-menu-area bg-white">
       <div class="container">
@@ -1168,10 +1168,10 @@
       <div class="profile-coverImage">
         <div class="title d-flex justify-content-between">
           <span>Ảnh bìa</span>
-          <a>Chỉnh sửa</a>
+          <a ng-click="vm.EditCover()">Chỉnh sửa</a>
         </div>
         <div class="content">
-          <img src="../../images/1.jpg" height="150px" width="300px">
+          <img src="{{vm.currentUser.CoverImage}}" height="150px" width="300px">
         </div>
       </div>
       <div class="profile-about">
@@ -1210,6 +1210,34 @@
       <img ng-src="{{vm.PreviewImage}}" ng-click="vm.ZoomImage(vm.PreviewImage)" style="cursor:pointer;">
       <form>
         <input type="submit" value="Lưu" style="" class="mt-4" ng-click="vm.SubmitAvatarProfile()">
+      </form>
+    </div>
+  </div>
+</script>
+
+<!-- edit cover  -->
+<script type="text/ng-template" id="OpenEditCover.html">
+  <div class="model-content">
+    <div class="modal-header">
+      <h3>Chỉnh Sửa Bìa</h3>
+      <button type="button" ng-click="vm.cancel()">
+        <span>x</span>
+      </button>
+    </div>
+    <div class="modal-body" style="text-align: center;">
+      <div class="profile-avatar row">
+        <div class="col-6" ng-file-upload>
+          <label for="filepost">
+            <i class="fa fa-file-photo-o"></i>
+          </label>
+          <input type="file" id="filepost" style="display:none !important" ng-model="vm.images" accept="image/*"
+          onchange="angular.element(this).scope().SelectFile(event)">
+          <label for="filepost" class="upload-image" >Tải hình lên</label>
+        </div>
+      </div>
+      <img ng-src="{{vm.PreviewImage}}" ng-click="vm.ZoomImage(vm.PreviewImage)" style="cursor:pointer;width: 300px;border-radius: 0px;">
+      <form>
+        <input type="submit" value="Lưu" style="" class="mt-4" ng-click="vm.SubmitCoverProfile()">
       </form>
     </div>
   </div>

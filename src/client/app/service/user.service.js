@@ -38,14 +38,23 @@
           Id: id,
           Avatar: image
         }
-        return $http.post(config.baseServiceUri + prefixUsers + "updateavatar", request);
+        return $http.put(config.baseServiceUri + prefixUsers + "updateavatar", request);
+      }
+
+      function SubmitCoverProfile(image, id) {
+        var request = {
+          Id: id,
+          CoverImage: image
+        }
+        return $http.put(config.baseServiceUri + prefixUsers + "updatecover", request);
       }
       var service = {
           userRegister: userRegister,
           checkCustomerCheckExisted: checkCustomerCheckExisted,
           UpdatePassword: UpdatePassword,
           UserSignIn: UserSignIn,
-          SubmitAvatarProfile: SubmitAvatarProfile
+          SubmitAvatarProfile: SubmitAvatarProfile,
+          SubmitCoverProfile: SubmitCoverProfile
       };
       return service;
     }
