@@ -1,6 +1,7 @@
 (function() {
   'use strict';
     var prefixUsers = 'users/';
+
   angular
     .module('app.service')
     .factory('userService', userService);
@@ -56,6 +57,25 @@
         }
         return $http.put(config.baseServiceUri + prefixUsers + "updateabout", request);
       }
+
+      function getPostByUser(id) {
+        return $http.get(config.baseServiceUri + prefixUsers + id + "/post");
+      }
+
+      function getAblumnByUser(id) {
+        return $http.get(config.baseServiceUri + "ablums/" + id + "/photo");
+      }
+
+      function getFriendByUser(id) {
+        return $http.get(config.baseServiceUri + "friends/" + id + "/following");
+      }
+
+      function getDetailUser(id) {
+        return $http.get(config.baseServiceUri + prefixUsers + id + "/detail");
+      }
+      function getNotifiedByUser(id) {
+        return $http.get(config.baseServiceUri + prefixUsers + id + "/notified");
+      }
       var service = {
           userRegister: userRegister,
           checkCustomerCheckExisted: checkCustomerCheckExisted,
@@ -63,7 +83,12 @@
           UserSignIn: UserSignIn,
           SubmitAvatarProfile: SubmitAvatarProfile,
           SubmitCoverProfile: SubmitCoverProfile,
-          SubmitUpdateAbout: SubmitUpdateAbout
+          SubmitUpdateAbout: SubmitUpdateAbout,
+          getPostByUser: getPostByUser,
+          getAblumnByUser: getAblumnByUser,
+          getFriendByUser: getFriendByUser,
+          getDetailUser: getDetailUser,
+          getNotifiedByUser: getNotifiedByUser
       };
       return service;
     }

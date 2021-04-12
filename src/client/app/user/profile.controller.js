@@ -5,9 +5,11 @@
     .module('app.user')
     .controller('ProfileController', ProfileController);
 
-  ProfileController.$inject = ['$rootScope', '$q', 'dataservice', 'logger', '$cookies', '$uibModal'];
+  ProfileController.$inject = ['$rootScope', '$q', 'dataservice', 'logger', '$cookies', '$uibModal', 'common', 'userService',
+  'RESPONSECODE', '$stateParams'];
   /* @ngInject */
-  function ProfileController($rootScope, $q, dataservice, logger, $cookies, $uibModal) {
+  function ProfileController($rootScope, $q, dataservice, logger, $cookies, $uibModal, common, userService, RESPONSECODE,
+    $stateParams) {
     var vm = this;
     vm.news = {
       title: 'helloWorld',
@@ -16,14 +18,107 @@
     vm.showProfilePost = true;
     vm.messageCount = 0;
     vm.people = [];
-    vm.title = 'Profile';
+    vm.title = 'Trang cá nhân';
     $rootScope.haveHeader = true;
     $rootScope.haveSidebar = true;
+    var id = $stateParams.id;
+    vm.id = id;
+
     vm.currentUser = JSON.parse($cookies.get("user"));
 
     vm.OpenPost = OpenPost;
     vm.OpenEditProfile = OpenEditProfile;
+    vm.OpenSlide = OpenSlide;
+    vm.OpenAlbumPhoto = OpenAlbumPhoto;
 
+    activate();
+    function activate() {
+      common.activateController([], 'ProfileController')
+      .then(function() {
+        $rootScope.showSplash = true;
+        //get detail user
+        userService.getDetailUser(id).then(function(result) {
+          $rootScope.showSplash = false;
+          if(result.data.ResponseCode == RESPONSECODE.Ok) {
+            vm.detail = result.data.Dto;
+          } else if(result.data.ResponseCode == RESPONSECODE.NoDataDB) {
+            vm.detail = null;
+          } else {
+            toastr('','Có lỗi xảy ra!');
+          }
+        });
+        $rootScope.showSplash = true;
+        // get post by user
+        userService.getPostByUser(id).then(function(result) {
+          $rootScope.showSplash = false;
+          if(result.data.ResponseCode == RESPONSECODE.Ok) {
+            vm.posts = result.data.Dtos;
+          } else if(result.data.ResponseCode == RESPONSECODE.NoDataDB) {
+            vm.posts = null;
+          }
+          else {
+            toastr.error('','Lỗi kết nối mạng!');
+          }
+        });
+        $rootScope.showSplash = true;
+        //get ablumn photo by user
+        userService.getAblumnByUser(id).then(function(result) {
+          $rootScope.showSplash = false;
+          if(result.data.ResponseCode == RESPONSECODE.Ok) {
+            vm.Ablums = result.data.Dtos;
+          } else if(result.data.ResponseCode == RESPONSECODE.NoDataDB) {
+            vm.Ablums = null;
+          } else {
+            toastr('',"Lỗi kết nối mạng!");
+          }
+        });
+        $rootScope.showSplash = true;
+        //get list friend by user
+        userService.getFriendByUser(id).then(function(result) {
+          $rootScope.showSplash = false;
+          if(result.data.ResponseCode == RESPONSECODE.Ok) {
+            console.log(result.data.Dtos)
+            vm.friends = result.data.Dtos;
+          } else if(result.data.ResponseCode == RESPONSECODE.NoDataDB) {
+            vm.friends = null;
+          } else {
+            toastr('','Có lỗi xảy ra!');
+          }
+        });
+        $rootScope.showSplash = true;
+        //get list notified by user
+        userService.getNotifiedByUser(id).then(function(result) {
+          $rootScope.showSplash = false;
+          if(result.data.ResponseCode == RESPONSECODE.Ok){
+            vm.notifieds = result.data.Dtos;
+          } else if(result.data.ResponseCode == RESPONSECODE.NoDataDB) {
+            vm.notifieds = null;
+          } else {
+            toastr('','Có lỗi xảy ra!');
+          }
+        });
+      });
+    }
+
+    function OpenAlbumPhoto(Id) {
+      var modalOpenAblumPhoto = $uibModal.open({
+        animation: true,
+        templateUrl: 'OpenAblumPhoto.html',
+        controller: 'OpenAblumPhotoCtrl',
+        controllerAs: 'vm',
+        backdrop: 'static',
+        size: 'lg',
+        resolve: {
+          ablums: function() {
+            return vm.Ablums;
+          },
+          idPhoto: function() {
+            return Id;
+          }
+
+        }
+      });
+    }
 
     function OpenPost() {
       var modalOpenPost = $uibModal.open({
@@ -43,23 +138,48 @@
         controller: 'OpenEditProfileCtrl',
         controllerAs: 'vm',
         backdrop: 'static',
-        size: 'xl'
+        size: 'xl',
+        resolve: {
+          detail: function() {
+            return vm.detail;
+          }
+        }
       });
     }
 
+    function OpenSlide(idPost) {
+      var modalOpenSlide = $uibModal.open({
+        animation: true,
+        templateUrl: 'OpenSlide.html',
+        controller: 'OpenSlideCtrl',
+        controllerAs: 'vm',
+        backdrop: 'static',
+        size: 'lg',
+        resolve: {
+          posts: function() {
+            return vm.posts;
+          },
+          idPost: function() {
+            return idPost;
+          }
+
+        }
+      });
+    }
   }
 
   var OpenEditProfileCtrl = 'OpenEditProfileCtrl';
   angular.module('app.user')
   .controller(OpenEditProfileCtrl,['$scope', '$uibModalInstance', '$cookies', '$uibModal', 'userService',
-  '$rootScope', 'RESPONSECODE', '$window',OpenEditProfileFunction]);
+  '$rootScope', 'RESPONSECODE', '$window', 'detail',OpenEditProfileFunction]);
 
   function OpenEditProfileFunction($scope, $uibModalInstance, $cookies, $uibModal, userService, $rootScope, RESPONSECODE,
-    $window) {
+    $window, detail) {
     var vm = this;
     vm.isShowEditAbout = false;
     var expirationDate = new Date();
     expirationDate.setMonth(expirationDate.getMonth() + 12);
+    vm.detail = angular.copy(detail);
 
     vm.cancel = cancel;
     vm.currentUser = JSON.parse($cookies.get("user"));
@@ -80,7 +200,15 @@
         controller: 'OpenEditAvatarCtrl',
         controllerAs: 'vm',
         backdrop: 'static',
-        size: 'xl'
+        size: 'xl',
+        resolve: {
+          detail: function() {
+            return detail;
+          },//profile
+          detail1: function() {
+            return vm.detail;
+          } // edit profie
+        }
       });
     }
 
@@ -101,13 +229,10 @@
 
     function SubmitUpdateAbout() {
       $rootScope.showSplash = true;
-
-      userService.SubmitUpdateAbout(vm.About, vm.currentUser.Id).then(function(result) {
+      userService.SubmitUpdateAbout(vm.About, id).then(function(result) {
         $rootScope.showSplash = false;
         if(result.data.ResponseCode == RESPONSECODE.Ok) {
           toastr.success("","Cập nhật thành công");
-          vm.currentUser.About = result.data.Dto;
-          $cookies.put("user",JSON.stringify(vm.currentUser), {'expires': expirationDate });
           $window.location.reload();
         } else {
           toastr.error("","Cập nhật thất bại")
@@ -119,9 +244,10 @@
   var OpenEditAvatarCtrl = 'OpenEditAvatarCtrl';
   angular.module('app.user')
   .controller(OpenEditAvatarCtrl,['$scope', '$uibModalInstance', '$cookies', 'userService', '$rootScope',
-  'RESPONSECODE', '$window',OpenEditAvatarFunction]);
+  'RESPONSECODE', '$window', 'detail', 'detail1',OpenEditAvatarFunction]);
 
-  function OpenEditAvatarFunction($scope, $uibModalInstance, $cookies, userService, $rootScope, RESPONSECODE, $window) {
+  function OpenEditAvatarFunction($scope, $uibModalInstance, $cookies, userService, $rootScope, RESPONSECODE, $window,
+  detail, detail1) {
     var vm = this;
 
     vm.cancel = cancel;
@@ -130,8 +256,9 @@
     vm.currentUser = JSON.parse($cookies.get("user"));
     var expirationDate = new Date();
     expirationDate.setMonth(expirationDate.getMonth() + 12);
+    vm.detail = angular.copy(detail);
 
-    vm.PreviewImage = vm.currentUser.Avatar;
+    vm.PreviewImage = vm.detail.Avatar;
     function cancel() {
       $uibModalInstance.dismiss('cancel');
     }
@@ -156,9 +283,13 @@
         $rootScope.showSplash = false;
         if(result.data.ResponseCode == RESPONSECODE.Ok) {
           toastr.success("","Cập nhật thành công");
+          $uibModalInstance.dismiss('cancel');
+          detail.Avatar = result.data.Dto;
+          detail1.Avatar = result.data.Dto;
+          //update avatarr in cookies
           vm.currentUser.Avatar = result.data.Dto;
-          $cookies.put("user",JSON.stringify(vm.currentUser), {'expires': expirationDate });
-          $window.location.reload();
+          $cookies.put("user", JSON.stringify(vm.currentUser), {'expires': expirationDate });
+          $rootScope.currentUser = vm.currentUser;
         } else {
           toastr.error("","Cập nhật thất bại")
         }
@@ -205,13 +336,65 @@
         $rootScope.showSplash = false;
         if(result.data.ResponseCode == RESPONSECODE.Ok) {
           toastr.success("","Cập nhật thành công");
-          vm.currentUser.CoverImage = result.data.Dto;
-          $cookies.put("user",JSON.stringify(vm.currentUser), {'expires': expirationDate });
           $window.location.reload();
         } else {
           toastr.error("","Cập nhật thất bại")
         }
       });
+    }
+  }
+
+  var OpenSlideCtrl = 'OpenSlideCtrl';
+  angular.module('app.user')
+  .controller(OpenSlideCtrl,['$scope','$uibModalInstance', 'posts', 'idPost', 'common', OpenSlideFunction]);
+  function OpenSlideFunction($scope, $uibModalInstance, posts, idPost, common) {
+    var vm = this;
+    vm.cancel = cancel;
+    vm.idPost = angular.copy(idPost);
+    vm.posts = angular.copy(posts);
+
+    activate();
+
+    function activate() {
+      common.activateController([], 'OpenEditCoverCtrl')
+      .then(function() {
+        vm.posts.forEach(post => {
+          if(post.Id == vm.idPost) {
+            vm.post = post;
+          }
+        });
+      });
+    }
+
+    function cancel() {
+      $uibModalInstance.dismiss('cancel');
+    }
+  }
+
+  var OpenAblumPhotoCtrl = 'OpenAblumPhotoCtrl';
+  angular.module('app.user')
+  .controller(OpenAblumPhotoCtrl,['$scope','$uibModalInstance', 'ablums', 'idPhoto', 'common', OpenAblumPhotoFunction]);
+  function OpenAblumPhotoFunction($scope, $uibModalInstance, ablums, idPhoto, common) {
+    var vm = this;
+    vm.cancel = cancel;
+    vm.idPhoto = angular.copy(idPhoto);
+    vm.ablums = angular.copy(ablums);
+
+    activate();
+
+    function activate() {
+      common.activateController([], 'OpenAblumPhotoCtrl')
+      .then(function() {
+        vm.ablums.forEach(album => {
+          if(album.Id == vm.idPhoto) {
+            vm.album = album;
+          }
+        });
+      });
+    }
+
+    function cancel() {
+      $uibModalInstance.dismiss('cancel');
     }
   }
 })();

@@ -43,7 +43,7 @@
   <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-messaging.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-functions.js"></script>
 
-
+  <link href="http://pgmmpk.github.io/mk-slideshow/dist/0.0.2/mk.slideshow.min.css" rel="stylesheet">
   <script>
     // Your web app's Firebase configuration
     // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -65,9 +65,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet">
   <script src="http://maps.googleapis.com/maps/api/js?sensor=false&language=en"></script>
   <link rel="stylesheet" href="/node_modules/perfect-scrollbar/css/perfect-scrollbar.css">
+
 </head>
 
-<body>
+<body >
   <div>
     <div ng-include="'app/layout/shell.html'"></div>
     <div id="splash-page" ng-show="showSplash">
@@ -92,6 +93,8 @@
   <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
   <script src="/bower_components/ng-file-upload/ng-file-upload.js"></script>
   <script src="/bower_components/ng-file-upload-shim/ng-file-upload-shim.js"></script>
+  <script src="/bower_components/angular-touch/angular-touch.js"></script>
+  <script src="/bower_components/angular-route/angular-route.js"></script>
   <!-- endbower -->
   <!-- endbuild -->
   <!-- npm js -->
@@ -133,6 +136,7 @@
   <script src="/src/client/app/newfeed/newfeed.route.js"></script>
   <script src="/src/client/app/newfeed/peopleNearly.controller.js"></script>
   <script src="/src/client/app/service/directive.js"></script>
+  <script src="/src/client/app/service/post.service.js"></script>
   <script src="/src/client/app/service/user.service.js"></script>
   <script src="/src/client/app/user/login.controller.js"></script>
   <script src="/src/client/app/user/profile.controller.js"></script>
@@ -147,5 +151,7 @@
   <script src="/node_modules/perfect-scrollbar/dist/perfect-scrollbar.js"></script>
   <script href="/node_modules/@popperjs/core/dist/umd/popper.js"></script>
   <script src="/node_modules/angular-cookies/angular-cookies.js"></script>
+  <script src="http://pgmmpk.github.io/mk-slideshow/dist/0.0.2/mk.slideshow.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular-route.min.js"></script>
 </body>
 </html>

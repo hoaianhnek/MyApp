@@ -9,6 +9,7 @@
     .constant('RESPONSECODE', {
       Ok: '20010',
       NoData: '20011',
+      NoDataDB: '20012',
       //401
       CustomerNotExisted: '40110',
       CustomerExisted: '40111',

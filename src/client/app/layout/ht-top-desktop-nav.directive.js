@@ -35,6 +35,9 @@
             vm.currentUser = JSON.parse($cookies.get("user"));
           }
         });
+        $rootScope.$watch('currentUser', function(newValue, oldValue) {
+          if(newValue != oldValue) vm.currentUser = newValue;
+        });
       }
       $scope.Logout = function() {
         $rootScope.showSplash = true;

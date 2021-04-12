@@ -172,20 +172,20 @@
         <div class="message-dropdown fadein fadeout profile-dropdown" ng-show="isShowProfile">
           <div class="profile-dropdown-head">
             <h5 class="name">
-              <a>{{vm.currentUser.UserName}}</a>
+              {{vm.currentUser.UserName}}
             </h5>
             <!-- <a href="/" class="email">hoaianh911.uit@gmail.com</a> -->
           </div>
           <div class="profile-dropdown-body">
             <ul>
               <li>
-                <a href="/profile">
+                <a href="/profile/{{vm.currentUser.Id}}">
                   <i class="fa fa-user"></i>Trang cá nhân</a>
               </li>
-              <li>
+              <!-- <li>
                 <a href="#">
                   <i class="fa fa-envelope"></i>Tin nhắn</a>
-              </li>
+              </li> -->
               <li>
                 <a href="#">
                   <i class="fa fa-file-text-o"></i>Hoạt động</a>

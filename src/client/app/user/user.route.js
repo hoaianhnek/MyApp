@@ -24,9 +24,9 @@
         }
       },
       {
-        state: 'profile',
+        state: 'Trang cá nhân',
         config: {
-          url: '/profile',
+          url: '/profile/:id',
           templateUrl: 'app/user/profile.html',
           controller: 'ProfileController',
           controllerAs: 'vm',
